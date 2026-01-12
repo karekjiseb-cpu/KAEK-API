@@ -19,7 +19,7 @@ app = FastAPI()
 
 # ---------------- Env / Flags ----------------
 # Shared secret used to sign the raw request body
-SHARED_SECRET = os.getenv("FIMSHAREDSECRET", "").encode("utf-8")
+SHARED_SECRET = os.getenv("KAEKSHAREDSECRET", "").encode("utf-8")
 
 # Dev flags to make testing easier
 VERIFY_SIGNATURE = os.getenv("VERIFY_SIGNATURE", "true").lower() == "true"
@@ -109,7 +109,7 @@ async def receive_webhook(
     if VERIFY_SIGNATURE:
         if not SHARED_SECRET:
             # Fail fast if signature verification is enabled but secret isn't set
-            raise HTTPException(status_code=500, detail="FIMSHAREDSECRET not set on server")
+            raise HTTPException(status_code=500, detail="KAEKSHAREDSECRET not set on server")
 
         provided_sig = _normalize_signature(x_fim_signature)
         if not provided_sig:
@@ -214,3 +214,4 @@ async def receive_webhook(
             })
 
     return {"status": "processed", "results": results}
+
