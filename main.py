@@ -101,7 +101,7 @@ def _extract_tx_fields(tx: Dict[str, Any]) -> Dict[str, Any]:
 @app.post("/webhook")
 async def receive_webhook(
     request: Request,
-    x_fim_signature: str = Header(None),
+    z_kaek_signature: str = Header(None),
 ):
     raw_body = await request.body()
 
@@ -111,7 +111,7 @@ async def receive_webhook(
             # Fail fast if signature verification is enabled but secret isn't set
             raise HTTPException(status_code=500, detail="KAEKSHAREDSECRET not set on server")
 
-        provided_sig = _normalize_signature(x_fim_signature)
+        provided_sig = _normalize_signature(z_kaek_signature)
         if not provided_sig:
             raise HTTPException(status_code=401, detail="Missing x-fim-signature header")
 
@@ -214,4 +214,5 @@ async def receive_webhook(
             })
 
     return {"status": "processed", "results": results}
+
 
