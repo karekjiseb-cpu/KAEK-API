@@ -113,7 +113,7 @@ async def receive_webhook(
 
         provided_sig = _normalize_signature(z_kaek_signature)
         if not provided_sig:
-            raise HTTPException(status_code=401, detail="Missing x-fim-signature header")
+            raise HTTPException(status_code=401, detail="Missing z-kaek-signature header")
 
         expected_sig = _compute_signature(SHARED_SECRET, raw_body)
 
@@ -214,5 +214,6 @@ async def receive_webhook(
             })
 
     return {"status": "processed", "results": results}
+
 
 
